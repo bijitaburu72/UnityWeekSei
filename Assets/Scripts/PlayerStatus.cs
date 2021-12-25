@@ -6,9 +6,6 @@ public class PlayerStatus : MonoBehaviour
 {
     public float HP = 100;
     public float AttackPower;
-    public float AttackPowerBullet;
-    public float BulletSpeed;
-    public float BulletDestroyDistance;
     public bool Death;
     //↡通常攻撃
     public AttackColliderScript[] AttackColliders;
@@ -22,7 +19,13 @@ public class PlayerStatus : MonoBehaviour
 
     PlayerController player_controller;
 
-    bool death_once;
+    bool death_once = false;
+
+    [Header("弾の設定")]
+    public float AttackPowerBullet;
+    public float BulletSpeed;
+    public float BulletDestroyDistance;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -37,12 +40,15 @@ public class PlayerStatus : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(HP < 0){
+        if(HP <= 0){
             //もし死んだら
             //DeathEventを実行。
+            Death = true;
             if(!death_once){
-                anim.SetTrigger("Death");
                 death_once = true;
+            }
+            if(Death){
+                anim.SetBool("Death", death_once);
             }
             DeathEvent.Invoke();
         }

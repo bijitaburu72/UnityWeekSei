@@ -9,14 +9,13 @@ public class EnemyStatus : MonoBehaviour
     public float AttackPower; //普通攻撃の攻撃力
     public float AttackPowerBullet; //弾の攻撃力
 
-    public float BulletSpeed; //弾のスピード速度 
-    public float BulletDistanceDestroy; //弾が飛んでから破壊される距離
     public float WaitForDestroyAfterDeath; //死んだ後の破壊されるまでの時間
     public AttackColliderScript[] AttackColliders;
     [Header("イベント系")]
     public UnityEvent DeathEvent; 
     public UnityEvent AttackedEvent;
     public UnityEvent DeathAnimationEndEvent;
+    public bool Death;
     Animator anim;
     bool death_once;
     // Start is called before the first frame update
@@ -39,6 +38,7 @@ public class EnemyStatus : MonoBehaviour
                 anim.SetTrigger("Death");
                 death_once = true;
             }
+            Death = true;
             Destroy(this.gameObject, WaitForDestroyAfterDeath);
         }
     }
